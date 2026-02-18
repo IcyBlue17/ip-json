@@ -85,28 +85,28 @@ func handleIP(c *gin.Context) {
 	ip = strings.TrimSpace(strings.Trim(ip, "[]"))
 
 	if !validIP(ip) {
-		c.JSON(400, gin.H{"error": "invalid IP address", "ip": ip})
+		c.IndentedJSON(400, gin.H{"error": "invalid IP address", "ip": ip})
 		return
 	}
 	if !publicIP(ip) {
-		c.JSON(422, gin.H{"error": "private or reserved IP address", "ip": ip})
+		c.IndentedJSON(422, gin.H{"error": "private or reserved IP address", "ip": ip})
 		return
 	}
 
 	if info, ok := ipCache.get(ip); ok {
-		c.JSON(200, info)
+		c.IndentedJSON(200, info)
 		return
 	}
 
 	info, err := lookupAll(c.Request.Context(), ip, providers, httpClient)
 	if err != nil {
-		c.JSON(502, gin.H{"error": "all upstream providers failed", "ip": ip})
+		c.IndentedJSON(502, gin.H{"error": "all upstream providers failed", "ip": ip})
 		ipCache.setTTL(ip, nil, 60*time.Second)
 		return
 	}
 
 	ipCache.set(ip, info)
-	c.JSON(200, info)
+	c.IndentedJSON(200, info)
 }
 
 func getClientIP(c *gin.Context) string {

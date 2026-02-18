@@ -18,7 +18,6 @@ type JieGuo struct {
 	ASN         string  `json:"asn,omitempty"`
 	ISP         string  `json:"isp,omitempty"`
 	IsProxy     *bool   `json:"is_proxy,omitempty"`
-	Sources     int     `json:"_sources"`
 }
 
 type resp1 struct {

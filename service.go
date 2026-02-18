@@ -217,7 +217,7 @@ func lookupAll(ctx context.Context, ip string, providers []provider, cli *http.C
 }
 
 func merge(ip string, results []lookupResult, total int) *JieGuo {
-	out := &JieGuo{IP: ip, Sources: len(results)}
+	out := &JieGuo{IP: ip}
 
 	byIdx := make(map[int]*JieGuo, len(results))
 	for _, r := range results {
